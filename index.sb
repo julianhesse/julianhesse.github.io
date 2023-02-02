@@ -1,0 +1,74 @@
+# %%--- [markdown]
+# properties:
+#   locked: true
+# ---%%
+# Final project
+# %% [css]
+#map { height: 500px; }
+
+# %% [css]
+.cell-gutter, .cell-top {
+    background-color: #fff;  /* Change this to #faf */
+    
+    /* Uncomment the next line for a dark mode effect! */
+    filter: invert() hue-rotate(180deg); 
+}
+
+.cell-bottom {
+  /* Change background to #000 for full dark mode */
+  background-color: #fff;
+}
+
+img {
+    background-color: transparent;
+}
+
+starboard-notebook {
+  background-color: #000;
+}
+
+.cells-container {
+  	background-color: #000;
+}
+
+# %%--- [html]
+# properties:
+#   run_on_load: true
+# ---%%
+<div id="map"></div>
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
+resp = await fetch("./json_files/data_2018.json");
+var stats_18_json = await resp.json();
+
+console.log(stats_18_json[0]);
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
+var map = L.map('map').setView([52.533, 13.426], 14);
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
+var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                minZoom: 0,
+                maxZoom: 20,
+            }).addTo(map);
+# %% [javascript]
+function preprocessData(data) {
+  for (var i = 0; i < data.length; i++) {
+    data[i].lat = data[i].YGCSWGS84;
+    data[i].lng = data[i].XGCSWGS84;
+  }
+}
+
+preprocessData(stats_18_json)
+console.log(stats_18_json[0]);
+# %% [javascript]
+for (var i = 0; i < 100; i++) {
+    L.marker([stats_18_json[i].lat, stats_18_json[i].lng]).addTo(map);
+}

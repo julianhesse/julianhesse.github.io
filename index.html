@@ -1,58 +1,114 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Final Project</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-     crossorigin=""/>
-
-    <style>
-        #map{ height: 800px; width: 1400px;}
-    </style>
-  </head>
-  <body>
-    <h1>Our Final Project Page! Current Prototype:</h1>
-    <div id="map"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> Starboard Notebook Viewer </title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="icon" href="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/favicon.ico">
+        <link href="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.css" rel="stylesheet">
+		<link rel="preload" href="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.js" as="script">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+	     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+	          crossorigin=""/>
+    </head>
+    
+    <body>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
      crossorigin=""></script>
-    <script>
-        // var map = L.map('map').setView([52.4524, 13.3037], 14); // FU University
-//         var map = L.map('map').setView([52.533, 13.426], 14);
-// //         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-// //     maxZoom: 19,
-// //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-// // }).addTo(map);
-// var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
-//                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-//                 minZoom: 0,
-//                 maxZoom: 20,
-//             }).addTo(map);
-// var marker = L.marker([52.53393955, 13.42689483]).addTo(map);
-// // var map = new L.Map('map', {
-// //     zoomControl: true, layers: [cyclosm]
-// // });
-// // map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | <a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> ' + VERSION);
-// // if (!map.restoreView()) {
-// //     // Default view on Amsterdam
-// //     map.setView([52.3727598, 4.8936041], 12);
-// // }
-// // var baseMaps = {
-// //                     "CyclOSM": cyclosm,
-// // };
-// // L.control.layers(baseMaps, None, { collapsed: true }).addTo(map);
-// // L.hash(map, allMapLayers);
+        <script>
+			
+			var searchParams = new URLSearchParams(window.location.search)
+			notebookPlace = searchParams.get( 'sb' ) ? searchParams.get( 'sb' ) : "index.sb"
+						
+			
+            window.initialNotebookContent = ` `;
+            errorNotebookContent = `# %% [markdown]\n# Something happened\n\nWe couldn't load the notebook`
+            window.starboardArtifactsUrl = `https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/`;
 
-// // load stats
-// import stats_18 from './json_files/data_2018.json'
 
-// console.log(stats_18[0]);
+			function file_extension_handler ( file_source ) {
+				
+				// handles some different file extensions such as .md, .js 
+				// returns a string -> string function, 
+				// according to the file name ( sb_source )
+				
+				if (file_source.substr(-3) == ".md")
+					return (text) => "# %% [markdown]\n" + text
 
-    </script>
-    <script type="module" src="js/main.js"></script>
-  </body>
+				if (file_source.substr(-3) == ".js")
+					return (text) => "# %% [javascript]\n" + text
+				
+				return (text) => text
+			}
+
+            async function getNotebookContent( notebookURL ) {
+				console.info( notebookURL )
+				notebookContent = await fetch( notebookURL )
+					.then( response => {
+						if (response.ok) {
+							return response
+						} else {
+							throw new Error("ERROR")
+						}
+					})
+					.then( response => response.text() )
+					.then( nbText => nbText.replace(/\n$/, "") ) // removes last newline if there are any
+					.catch( () => errorNotebookContent )
+
+				return notebookContent
+			}
+			
+			function loadNotebook (content) {
+				console.info(content)
+				window.initialNotebookContent = content
+				
+				const notebook_js = document.createElement('script')
+				notebook_js.src = "https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.js"
+				document.head.appendChild( notebook_js )
+			}
+			
+			function notebookURLFromPlace ( place ) {				
+				//returns final URL, that can be fetched directly
+				
+				//recognices github/USER/REPO/blob/branchORcommit/filepath/filename 
+				//and returns https://raw.githubusercontent.com/USER/REPO/branchORcommit/filepath/filename 
+				
+				if ( place.substr(0,7) == "github/" ) {
+				
+					let _,user,repo, blob, branchORcommit, rest
+					[ _, user, repo, blob, branchORcommit, ...rest ] = place.split("/")
+					
+					return "https://raw.githubusercontent.com/" + [user, repo, branchORcommit, rest.join("/") ].join("/")
+				}
+				
+				//recognices gist/USER/GIST/?version/?filename 
+				//and returns https://gist.githubusercontent.com/USER/GIST/raw/?version/?filename
+				if ( place.substr(0,5) == "gist/" ) {
+				
+					let _, user, gist, rest
+					[ _, user, gist, ...rest] = place.split("/")
+					
+					return "https://gist.githubusercontent.com/" + [user, gist, "raw", rest.join("/")].join("/")
+				}
+				
+				return place
+			
+			}
+			
+			
+            if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
+			    notebookURL = notebookURLFromPlace ( notebookPlace )
+            }
+            else {
+                notebookURL = 'index.sb'
+                console.log('localhost')
+            }
+			getNotebookContent( notebookURL )
+			.then( file_extension_handler( notebookPlace) )
+			.then( loadNotebook )
+			
+        </script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.js"></script> -->
+    </body>
 </html>
