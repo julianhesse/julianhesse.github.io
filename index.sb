@@ -4,9 +4,6 @@
 # ---%%
 # Final project
 # %% [css]
-#map { height: 500px; }
-
-# %% [css]
 .cell-gutter, .cell-top {
     background-color: #fff;  /* Change this to #faf */
     
@@ -30,6 +27,25 @@ starboard-notebook {
 .cells-container {
   	background-color: #000;
 }
+
+# %% [css]
+#map { height: 600px; }
+
+div.leaflet-marker-icon.q-marker-cluster:hover {
+  fill-opacity: 1;
+  opacity: 0.4;
+  background-color: transparent;
+}
+/*
+div.leaflet-marker-icon.q-marker-cluster:hover > div {
+  fill-opacity: 0;
+  opacity: 0;
+  background-color: transparent;
+  visibility: hidden;
+}
+.q-maker-cluster:hover{
+  opacity: 0;
+} */
 
 # %%--- [html]
 # properties:

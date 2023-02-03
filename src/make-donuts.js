@@ -134,33 +134,33 @@ var QCluster = (function(module){
                 .append("g")
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
             
-                path = svg.selectAll("path")
-                        .data(function(){
-                                    var dataObjArr,
-                                        dataArr,
-                                        pieData;
-                                        
-                                    dataObjArr = dataset;
+            path = svg.selectAll("path")
+                    .data(function(){
+                                var dataObjArr,
+                                    dataArr,
+                                    pieData;
                                     
-                                    dataArr = [];
-                                    
-                                    for (var i = 0, iMax = dataObjArr.length; i < iMax; i++) {
-                                        dataArr.push(dataObjArr[i]['count']);	
-                                    }
-                                    
-                                    pieData = pie(dataArr);
-                                    
-                                    for (var i = 0, iMax = pieData.length; i < iMax; i++) {
-                                        pieData[i].data = dataObjArr[i];	
-                                    }
-                                    
-                                    return pieData;
-                                })
-                            .enter().append("path")
-                            .attr("fill", function(d, j) { 
-                                            return d.data.color; 
-                                            })
-                            .attr("d", arc);
+                                dataObjArr = dataset;
+                                
+                                dataArr = [];
+                                
+                                for (var i = 0, iMax = dataObjArr.length; i < iMax; i++) {
+                                    dataArr.push(dataObjArr[i]['count']);	
+                                }
+                                
+                                pieData = pie(dataArr);
+                                
+                                for (var i = 0, iMax = pieData.length; i < iMax; i++) {
+                                    pieData[i].data = dataObjArr[i];	
+                                }
+                                
+                                return pieData;
+                            })
+                        .enter().append("path")
+                        .attr("fill", function(d, j) { 
+                                        return d.data.color; 
+                                        })
+                        .attr("d", arc);
     
     
         }

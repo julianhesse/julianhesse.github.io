@@ -676,14 +676,32 @@ var QCluster = (function(module){
     };
 
     module.PointClusterer.prototype.defaultMouseoverHandler = function(e) {
+		console.log('Mouseover: point-clusterer.js')
     	if (this.mouseoverGroup) return;
     	
     	this.mouseoverCluster = e.target;
     	var points = this.mouseoverCluster.points;
     	var len = points.length;
     	this.mouseoverGroup = L.layerGroup();
+
+		// trying to change opacity and filOpacity based on number of points in cluster
+		var fillOpacity = .3;
+		var opacity = 0;
+
+		if (points.length < 10) {
+			fillOpacity = .8;
+			opacity = .5;
+		} else if (points.length < 50) {
+			fillOpacity = .7;
+			opacity = 1;
+		} else if (points.length < 100) {
+			fillOpacity = .45;
+			opacity = .8;
+		}
+
     	for(var i=len-1; i>=0; --i) {
     		var p = points[i];
+
 
     		if(this.reportingProperty && p[this.reportingProperty]) {
     			var prop = p[this.reportingProperty];
@@ -696,8 +714,8 @@ var QCluster = (function(module){
     		var circle = new L.CircleMarker(latLng, {
     			radius: 3,
     			color: color,
-    			fillOpacity: .3,
-    			opacity: 0
+    			fillOpacity: fillOpacity,
+    			opacity: opacity
     		});
     		this.mouseoverGroup.addLayer(circle);
     	}
