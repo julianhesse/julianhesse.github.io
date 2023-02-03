@@ -58,7 +58,10 @@ var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}
                 minZoom: 0,
                 maxZoom: 20,
             }).addTo(map);
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
 function preprocessData(data) {
   for (var i = 0; i < data.length; i++) {
     data[i].lat = data[i].YGCSWGS84;
@@ -72,3 +75,17 @@ console.log(stats_18_json[0]);
 for (var i = 0; i < 100; i++) {
     L.marker([stats_18_json[i].lat, stats_18_json[i].lng]).addTo(map);
 }
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
+var pointCluster = new QCluster.PointClusterer(stats_18_json, "accidents", map, 'accid-layer',
+                                            {
+                                              reportingProperty: 'UKATEGORIE',
+                                              backgroundColor: '#0099dd',
+                                              clusterTolerance: 100,
+                                              //defaultPalette: ['#BBE5ED', '#B399A2', '#784F41', '#660000'],
+                                              defaultPalette: ['#0909D2', '#D80F41', '#111111', '#660000']
+                                            });
+# %% [javascript]
+console.log(QCluster.PointClusterer)
