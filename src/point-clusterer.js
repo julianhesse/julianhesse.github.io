@@ -641,6 +641,27 @@ var QCluster = (function(module){
         this.makeClusters();
     
     };
+
+	module.PointClusterer.prototype.replacePoints = function(pointArr) {
+		this.removeLayer();
+        pointArrLength = pointArr.length;
+		
+		if (this.dataFormat === 'geojson') {
+			this.pointData = processGeoJson(pointArr);
+		} else { // point array
+			this.pointData = processPointArray(pointArr);
+		}
+
+		// Do the clustering
+		this.makeClusters();
+		
+		//  When the map pans or zooms, fire this.mapMove
+		this.map.on('moveend', this.mapMove, this);
+
+		// Remove the indicator points when the map zooms. 
+		// The mouseout event won't be fired (because the mouse is still there)...
+		this.map.on('zoomstart', this.removeIndicatorPoints, this);
+	};
     
     module.PointClusterer.prototype.defaultClickHandler = function(e) {
 	

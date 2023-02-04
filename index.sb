@@ -104,4 +104,13 @@ var pointCluster = new QCluster.PointClusterer(stats_18_json, "accidents", map, 
                                               defaultPalette: ['#0909D2', '#D80F41', '#111111', '#660000']
                                             });
 # %% [javascript]
-console.log(QCluster.PointClusterer)
+// remove pointCluster
+pointCluster.removeLayer()
+delete pointCluster;
+# %% [javascript]
+console.log(pointCluster.layer)
+# %% [javascript]
+console.log(pointCluster)
+# %% [javascript]
+// replace Points in pointCluser
+pointCluster.replacePoints(stats_18_json.slice(0,10000))
