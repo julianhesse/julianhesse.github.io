@@ -161,9 +161,9 @@ L.control.myControl = function(opts) {
   return new L.Control.MyControl(opts);
 }
 
-// L.control.myControl({
-//    position: 'topright'
-// }).addTo(map);
+L.control.myControl({
+    position: 'topright'
+}).addTo(map);
 
 # %%--- [html]
 # properties:
