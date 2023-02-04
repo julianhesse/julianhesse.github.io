@@ -51,7 +51,10 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
   opacity: 0;
 } */
 
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
 function applyFilters(filters) {
   return stats_18_json.filter((datapoint) => {
 
