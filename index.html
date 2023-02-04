@@ -2,16 +2,121 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Starboard Notebook</title>
+        <title> Starboard Notebook Viewer </title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="icon" href="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/favicon.ico">
         <link href="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.css" rel="stylesheet">
+		<link rel="preload" href="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.js" as="script">
+        <link rel="stylesheet" href="css/q-cluster.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+	     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+	          crossorigin=""/>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
     </head>
+    
     <body>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="../src/utils.js"></script>
+        <script src="../src/clustering.js"></script>
+        <script src="../src/point-clusterer.js"></script>
+        <script src="../src/make-donuts.js"></script>
         <script>
-            window.initialNotebookContent = `# %%--- [markdown]\n# properties:\n#   locked: true\n# ---%%\n# Final project\n# %% [css]\n.cell-gutter, .cell-top {\n    background-color: #fff;  /* Change this to #faf */\n    \n    /* Uncomment the next line for a dark mode effect! */\n    filter: invert() hue-rotate(180deg); \n}\n\n.cell-bottom {\n  /* Change background to #000 for full dark mode */\n  background-color: #fff;\n}\n\nimg {\n    background-color: transparent;\n}\n\nstarboard-notebook {\n  background-color: #000;\n}\n\n.cells-container {\n  \tbackground-color: #000;\n}\n\n.my-control {\n   background-color: #fff\n}\n\n# %% [css]\n#map { height: 600px; }\n\ndiv.leaflet-marker-icon.q-marker-cluster:hover {\n  fill-opacity: 1;\n  opacity: 0.4;\n  background-color: transparent;\n}\n/*\ndiv.leaflet-marker-icon.q-marker-cluster:hover > div {\n  fill-opacity: 0;\n  opacity: 0;\n  background-color: transparent;\n  visibility: hidden;\n}\n.q-maker-cluster:hover{\n  opacity: 0;\n} */\n\n# %% [javascript]\nfunction applyFilters(filters) {\n  return stats_18_json.filter((datapoint) => {\n\n    for(var i = 0; i < filters.length; i++) {\n      if(filters[i](datapoint)) {\n        return false;\n      };\n    }\n    return true;\n  });\n}\n// 0 = trocken\n// 1 = nass/feucht/schlüpfrig\n// 2 = winterglatt\n\n// 0 = Tageslicht\n// 1 = Dämmerung\n// 2 = Dunkelheit\n\n\nvar road_values = ["trocken", "nass", "glatt"];\n\nvar road_filters = [\n  datapoint => datapoint["STRZUSTAND"] == 0,\n  datapoint => datapoint["STRZUSTAND"] == 1,\n  datapoint => datapoint["STRZUSTAND"] == 2\n];\n\n\nvar light_values = ["Tageslicht", "Dämmerung", "Dunkelheit"];\n\nvar light_filters = [\n  datapoint => datapoint["ULICHTVERH"] == 0,\n  datapoint => datapoint["ULICHTVERH"] == 1,\n  datapoint => datapoint["ULICHTVERH"] == 2\n];\n\n\nfunction checkboxClick(box) {\n  var filters = [];\n  for(var i = 0; i < 3; i++) {\n    \n    if(!document.getElementById(\`cb_road_\${i+1}\`).checked) {\n      filters.push(road_filters[i]);\n    }\n\n    if(!document.getElementById(\`cb_light_\${i+1}\`).checked) {\n      filters.push(light_filters[i]);\n    }\n  }\n\n  var data = applyFilters(filters);\n  console.log(data.length);\n  pointCluster.replacePoints(data);\n}\n\nfunction toggleFilters() {\n  console.log("clicked");\n  var filter_div = document.getElementById("inner_container");// document.getElementsByClassName("my-control")[0];\n\n  if (filter_div.style.display === "none") {\n    filter_div.style.display = "block";\n  } else {\n    filter_div.style.display = "none";\n  }\n  console.log(filter_div);\n}\n\n\nvar input_html = "<button type='hide' onclick='toggleFilters()'>Hide</button><br><br>";\ninput_html += "<div id=inner_container><br>"\ninput_html += "Straßenbeschaffenheit <br>\\n";\n\nfor(var i = 0; i < 3; i++) {\n   \n  input_html += \`<input type="checkbox" onchange="checkboxClick(this);" id="cb_road_\${i+1}" checked> \\n\`\n  input_html += \`<label for="cb_road_\${i+1}">\${road_values[i]}</label> \\n\`;\n}\n\ninput_html += "<br><br> Lichtverhältnisse <br>\\n";\n\nfor(var i = 0; i < 3; i++) {\n   \n  input_html += \`<input type="checkbox" onchange="checkboxClick(this);" id="cb_light_\${i+1}" checked> \\n\`\n  input_html += \`<label for="cb_light_\${i+1}">\${light_values[i]}</label> \\n\`;\n}\n\ninput_html += "</div>";\n\nL.Control.MyControl = L.Control.extend({\n  onAdd: function(map) {\n\n    var el = L.DomUtil.create('div', 'leaflet-bar my-control');\n\n    el.innerHTML = input_html;\n    \n    \n    return el;\n  },\n\n  onRemove: function(map) {\n    // Nothing to do here\n  }\n});\n\nL.control.myControl = function(opts) {\n  return new L.Control.MyControl(opts);\n}\n\n// L.control.myControl({\n//    position: 'topright'\n// }).addTo(map);\n\n# %%--- [html]\n# properties:\n#   run_on_load: true\n# ---%%\n<div id="map"></div>\n# %%--- [javascript]\n# properties:\n#   run_on_load: true\n# ---%%\nresp = await fetch("./json_files/data_2018.json");\nvar stats_18_json = await resp.json();\n\nconsole.log(stats_18_json[0]);\n# %%--- [javascript]\n# properties:\n#   run_on_load: true\n# ---%%\nvar map = L.map('map').setView([52.533, 13.426], 14);\n# %%--- [javascript]\n# properties:\n#   run_on_load: true\n# ---%%\nvar cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {\n                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',\n                minZoom: 0,\n                maxZoom: 20,\n            }).addTo(map);\n# %%--- [javascript]\n# properties:\n#   run_on_load: true\n# ---%%\nfunction preprocessData(data) {\n  for (var i = 0; i < data.length; i++) {\n    data[i].lat = data[i].YGCSWGS84;\n    data[i].lng = data[i].XGCSWGS84;\n  }\n}\n\npreprocessData(stats_18_json)\nconsole.log(stats_18_json[0]);\n# %% [javascript]\nfor (var i = 0; i < 100; i++) {\n    L.marker([stats_18_json[i].lat, stats_18_json[i].lng]).addTo(map);\n}\n# %%--- [javascript]\n# properties:\n#   run_on_load: true\n# ---%%\nvar pointCluster = new QCluster.PointClusterer(stats_18_json, "accidents", map, 'accid-layer',\n                                            {\n                                              reportingProperty: 'UKATEGORIE',\n                                              backgroundColor: '#0099dd',\n                                              clusterTolerance: 100,\n                                              //defaultPalette: ['#BBE5ED', '#B399A2', '#784F41', '#660000'],\n                                              defaultPalette: ['#0909D2', '#D80F41', '#111111', '#660000']\n                                            });\n# %% [javascript]\n// remove pointCluster\npointCluster.removeLayer()\ndelete pointCluster;\n# %% [javascript]\nconsole.log(pointCluster.layer)\n# %% [javascript]\nconsole.log(pointCluster)\n# %% [javascript]\n// replace Points in pointCluser\npointCluster.replacePoints(stats_18_json.slice(0,10000))`;
+			
+			var searchParams = new URLSearchParams(window.location.search)
+			notebookPlace = searchParams.get( 'sb' ) ? searchParams.get( 'sb' ) : "index.sb"
+						
+			
+            window.initialNotebookContent = ` `;
+            errorNotebookContent = `# %% [markdown]\n# Something happened\n\nWe couldn't load the notebook`
             window.starboardArtifactsUrl = `https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/`;
+
+
+			function file_extension_handler ( file_source ) {
+				
+				// handles some different file extensions such as .md, .js 
+				// returns a string -> string function, 
+				// according to the file name ( sb_source )
+				
+				if (file_source.substr(-3) == ".md")
+					return (text) => "# %% [markdown]\n" + text
+
+				if (file_source.substr(-3) == ".js")
+					return (text) => "# %% [javascript]\n" + text
+				
+				return (text) => text
+			}
+
+            async function getNotebookContent( notebookURL ) {
+				console.info( notebookURL )
+				notebookContent = await fetch( notebookURL )
+					.then( response => {
+						if (response.ok) {
+							return response
+						} else {
+							throw new Error("ERROR")
+						}
+					})
+					.then( response => response.text() )
+					.then( nbText => nbText.replace(/\n$/, "") ) // removes last newline if there are any
+					.catch( () => errorNotebookContent )
+
+				return notebookContent
+			}
+			
+			function loadNotebook (content) {
+				console.info(content)
+				window.initialNotebookContent = content
+				
+				const notebook_js = document.createElement('script')
+				notebook_js.src = "https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.js"
+				document.head.appendChild( notebook_js )
+			}
+			
+			function notebookURLFromPlace ( place ) {				
+				//returns final URL, that can be fetched directly
+				
+				//recognices github/USER/REPO/blob/branchORcommit/filepath/filename 
+				//and returns https://raw.githubusercontent.com/USER/REPO/branchORcommit/filepath/filename 
+				
+				if ( place.substr(0,7) == "github/" ) {
+				
+					let _,user,repo, blob, branchORcommit, rest
+					[ _, user, repo, blob, branchORcommit, ...rest ] = place.split("/")
+					
+					return "https://raw.githubusercontent.com/" + [user, repo, branchORcommit, rest.join("/") ].join("/")
+				}
+				
+				//recognices gist/USER/GIST/?version/?filename 
+				//and returns https://gist.githubusercontent.com/USER/GIST/raw/?version/?filename
+				if ( place.substr(0,5) == "gist/" ) {
+				
+					let _, user, gist, rest
+					[ _, user, gist, ...rest] = place.split("/")
+					
+					return "https://gist.githubusercontent.com/" + [user, gist, "raw", rest.join("/")].join("/")
+				}
+				
+				return place
+			
+			}
+			
+			
+            if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
+			    notebookURL = notebookURLFromPlace ( notebookPlace )
+            }
+            else {
+                notebookURL = 'index.sb'
+                console.log('localhost')
+            }
+			getNotebookContent( notebookURL )
+			.then( file_extension_handler( notebookPlace) )
+			.then( loadNotebook )
+			
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/starboard-notebook@0.14.2/dist/starboard-notebook.js"></script> -->
     </body>
 </html>
