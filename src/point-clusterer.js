@@ -677,6 +677,7 @@ var QCluster = (function(module){
 
     module.PointClusterer.prototype.defaultMouseoverHandler = function(e) {
 		console.log('Mouseover: point-clusterer.js')
+		console.log(e.target.points[0])
     	if (this.mouseoverGroup) return;
     	
     	this.mouseoverCluster = e.target;
