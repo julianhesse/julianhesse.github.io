@@ -61,12 +61,13 @@ starboard-notebook {
 .legend_text {
   position: relative;
   top: -2px;
+  margin-left: 10px;
   display: inline-block;
   font-weight: bold;
 }
 
 #legend_content {
-  padding: 5px 20px 5px 5px;
+  padding: 5px 5px 5px 5px;
 }
 
 #rect_1 {
