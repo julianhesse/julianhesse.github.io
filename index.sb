@@ -1,9 +1,8 @@
-# %%--- [markdown]
+# %%--- [css]
 # properties:
-#   locked: true
+#   top_hidden: true
+#   bottom_hidden: true
 # ---%%
-## Fahrrad-Unfälle Berlins der letzten Jahre
-# %% [css]
 .cell-gutter, .cell-top {
     background-color: #fff;  /* Change this to #faf */
     
@@ -28,12 +27,112 @@ starboard-notebook {
   	background-color: #000;
 }
 
-.my-control {
-   background-color: #fff
+.cells-text {
+  	background-color: #000;
+  	color: #fff;
 }
 
-# %% [css]
-#map { height: 600px; }
+.my-control {
+   background-color: rgba(255, 255, 255,0.9);
+   width: 140px;
+}
+
+.base_legend {
+   background-color: rgba(255, 255, 255,0.9);
+   width: 130px;
+}
+
+.legend_text {
+  position: relative;
+  top: -2px;
+  margin-left: 10px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+#legend_content {
+  padding: 5px 5px 5px 5px;
+}
+
+#rect_1 {
+  background-color: #DA0B2A;
+}
+
+#rect_2 {
+  background-color: #FF7424;
+}
+
+#rect_3 {
+ 
+  background-color: #0909D2;
+  
+}
+
+.type_rect {
+  width: 25px;
+  height: 10px;
+  display:inline-block;
+}
+
+
+
+.cb {
+  margin-left: 10px;
+}
+
+.cb_label {
+  top: -3px;
+  position: relative;
+  margin-right: 5px;
+}
+
+.filter_header {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+#hide_button {
+  
+  position: relative;
+  top: 3px;
+  background-color: rgba(255, 255, 255,0.9);
+  border: none;
+  
+  // right: 0px;
+  
+}
+
+#inner_container {
+  
+  margin-bot: 10px;
+  padding: 5px 0px 5px 0px;
+  display: block;
+}
+
+#filter_top_heading {
+  position: relative;
+  font-weight: bold;
+  font-size: 20px;
+  top: -3px;
+}
+
+# %%--- [css]
+# properties:
+#   top_hidden: true
+#   bottom_hidden: true
+# ---%%
+/* CSS for the map */
+#map {
+  height: 600px;
+  /*width: 907 px;*/
+  width: 95%;
+  display: flex;
+  float: left;
+  /*
+  display: table-cell;
+  */
+  /*position: relative;*/
+}
 
 div.leaflet-marker-icon.q-marker-cluster:hover {
   fill-opacity: 1;
@@ -51,10 +150,82 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
   opacity: 0;
 } */
 
-# %% [markdown]
+
+# %%--- [css]
+# properties:
+#   top_hidden: true
+#   bottom_hidden: true
+# ---%%
+/* CSS for the legend */
+ #legend {
+    width: 42px;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: row;
+	height: 100%;
+    /*
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    */
+}
+
+#legend button {
+    height: 100%;
+    width: 42px;
+    background-color: #2e4369;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+}
+
+#legend .iframe {
+    display: none;
+}
+
+#legend iframe {
+    width: 100%;
+    padding-left: 0.5em;
+    height: 100%;
+    border: 0;
+    box-sizing: border-box;
+}
+# %%--- [markdown]
+# properties:
+#   locked: true
+#   bottom_hidden: true
+# ---%%
+## Fahrrad-Unfälle Berlins von 2018 bis 2022
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
+Sehr geehrter Herr Kollowa, zuallererst wollen wir Ihnen Danken, dass Sie sich die Zeit nehmen, sich mit unserer Visualisierung zu beschäftigen. 
+
+Fahrradfahrende Menschen sind die gefährdetste Gruppe des Straßenverkehrs in der Stadt. Um den vielen Unfällen entgegenzuwirken und diese zu reduzieren, haben wir uns entschieden, dafür eine Visualisierung zu kreieren. Sie soll diese Unfälle aufzeigen und weitere Informationen zu diesen bereitstellen, um es Experten und Expertinnen zu erlauben, mögliche Zusammenhänge zu erschließen und folgende Leitfrage zu beantworten:
+# %%--- [html]
+# properties:
+#   run_on_load: true
+#   top_hidden: true
+# ---%%
+<p  align="center" class="cells-text"> Wo sind Hot-Spots für Fahrradunfälle und wo bedarf es dementsprechend im Verkehrswesen an Handlungsbedarf zur Erhöhung der Sicherheit?</p>
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
+## Woher kommen die Daten?
+
+Die Berliner Senatsverwaltung für Wirtschaft, Energie und Betriebe stellt unter dem Online-Service <https://daten.berlin.de/> eine Vielzahl von Datensätzen öffentlich zur Verfügung. Von dieser Seite haben wir uns vier Datensätze rausgegriffen, die unter dem Namen “Straßenverkehrsunfälle nach Unfallort in Berlin” für die Jahre 2018 bis 2021 veröffentlicht wurden. In jenen Datensätzen sind viele Informationen zu allen gemeldeten Unfällen Berlins angegeben. Verzeichnet sind unter anderem beteiligte Parteien (LKW, PKW, Fahrrad...), Straßen- und Lichtverhältnisse, GPS Daten und Schwere der resultierenden Verletzung.
+
+Von diesen haben wir die Unfälle herausgefiltert, an denen mindestens ein Fahrrad beteiligt war und haben darauf unsere interaktive Visualisierung aufgebaut. 
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
 ## Wie ist die Visualisierung zu lesen?
 
-Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 dargestellt sind. Die Unfälle sind aufgeschlüsselt nach der schwere der zugezogenen Verletzung(en) der Beteiligten; von blau (leicht), über orange (schwer) bis rot (tödlich).
+Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 dargestellt sind. Die Unfälle sind aufgeschlüsselt nach der Schwere der zugezogenen Verletzung(en) der Beteiligten; von blau (leicht), über orange (schwer) bis rot (tödlich).
 
 \
 Die zugrundeliegende Karte ist eine Fahrrad-Karte von OpenStreetMap (<https://www.cyclosm.org/>). Hier sind grundsätzliche alle relevanten Verkehrsinformationen enthalten, aber insbesondere sind verschiedene Arten von Fahrrad-Wegen dargestellt. Diese Informationen können sie der OpenStreetMap-Legende entnehmen.
@@ -67,58 +238,161 @@ Des weiteren gibt es Filterfunktionen, die es erlauben, zu kontrollieren welche 
 # %%--- [html]
 # properties:
 #   run_on_load: true
+#   top_hidden: true
 # ---%%
 <div id="map"></div>
+<div id="legend">
+  <button>❮</button>
+  <div class="iframe"><iframe src="https://cyclosm.org/legend.html"></iframe></div>
+</div>
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 resp = await fetch("./json_files/data_2018.json");
 var stats_18_json = await resp.json();
+resp = await fetch("./json_files/data_2019.json");
+var stats_19_json = await resp.json();
+resp = await fetch("./json_files/data_2020.json");
+var stats_20_json = await resp.json();
+resp = await fetch("./json_files/data_2021.json");
+var stats_21_json = await resp.json();
 
-console.log(stats_18_json[0]);
+// .concat(stats_20_json.concat(stats_21_json))
+var combined_data = stats_18_json.concat(stats_19_json.concat(stats_20_json.concat(stats_21_json)));// stats_19_json.concat(stats_18_json);
+console.log(combined_data.length);
+console.log(combined_data[0]);
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
-# ---%%
-var map = L.map('map').setView([52.533, 13.426], 14);
-# %%--- [javascript]
-# properties:
-#   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 var back_color = '#9A999F'
 var color_scheme = ['#0909D2','#FF7424','#DA0B2A','#111111']
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
+// Add map tiles (the actual map)
 var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                 minZoom: 0,
                 maxZoom: 20,
             }).addTo(map);
+// Add a scale
+L.control.scale().addTo(map);
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
+// =============
+// Handle legend
+// =============
+function handleResize() {
+    var shouldLegendOpen = true;
+
+    if (screen.width > 800) {
+        shouldLegendOpen = true;
+    } else {
+        shouldLegendOpen = false;
+    }
+
+    if (shouldLegendOpen) {
+        //document.querySelector('#map').style.right = '300px';
+        document.querySelector('#map').style.width = '680px';
+        document.querySelector('#legend .iframe').style.display = 'initial';
+        document.querySelector('#legend').style.width = '300px';
+        //document.querySelector('#legend').style.marginLeft = '650px';
+        document.querySelector('#legend button').innerText = '❯';
+    } else {
+        //document.querySelector('#map').style.right = '42px';
+        document.querySelector('#map').style.width = '938px';
+        document.querySelector('#legend .iframe').style.display = 'none';
+        document.querySelector('#legend').style.width = '42px';
+        //document.querySelector('#legend').style.marginLeft = '908px';
+        document.querySelector('#legend button').innerText = '❮';
+    }
+}
+handleResize();
+window.addEventListener('resize', handleResize());
+document.querySelector('#legend button').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    if (document.querySelector('#legend button').innerText == '❮') {
+        //document.querySelector('#map').style.right = '300px';
+        document.querySelector('#map').style.width = '680px';
+        document.querySelector('#legend .iframe').style.display = 'initial';
+        document.querySelector('#legend').style.width = '300px';
+        //document.querySelector('#legend').style.marginLeft = '650px';
+        document.querySelector('#legend button').innerText = '❯';
+    } else {
+        //document.querySelector('#map').style.right = '42px';
+        document.querySelector('#map').style.width = '938px';
+        document.querySelector('#legend .iframe').style.display = 'none';
+        document.querySelector('#legend').style.width = '42px';
+        //document.querySelector('#legend').style.marginLeft = '908px';
+        document.querySelector('#legend button').innerText = '❮';
+    }
+    map.invalidateSize();
+});
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 function preprocessData(data) {
+  var result = [];
   for (var i = 0; i < data.length; i++) {
-    data[i].lat = data[i].YGCSWGS84;
-    data[i].lng = data[i].XGCSWGS84;
+	var point = data[i];
+    result.push({"UKATEGORIE" : point["UKATEGORIE"], "ULICHTVERH" : point["ULICHTVERH"], 
+                 "ULICHTVERH" : point["ULICHTVERH"],
+                 "UJAHR" : point["UJAHR"]});
+
+    
+	
+    if(result[i]["UJAHR"] == 2019) {
+
+      	result[i]["USTRZUSTAND"] = point["USTRZUSTAND"];
+        var y_str = data[i].YGCSWGS84.toString();
+      	var x_str = data[i].XGCSWGS84.toString();
+
+      	result[i].lat = parseFloat([y_str.slice(0, 2), ".", y_str.slice(2, y_str.length)].join(''));
+      	result[i].lng = parseFloat([x_str.slice(0, 2), ".", x_str.slice(2, x_str.length)].join(''));
+    }
+      
+    else if(result[i]["UJAHR"] == 2018) {
+        result[i]["STRZUSTAND"] = point["STRZUSTAND"]
+      	result[i].lat = data[i].YGCSWGS84;
+    	result[i].lng = data[i].XGCSWGS84;
+    }
+      
+    else {
+        result[i]["USTRZUSTAND"] = point["USTRZUSTAND"]
+    	result[i].lat = parseFloat(data[i].YGCSWGS84.replace(",", "."));
+    	result[i].lng = parseFloat(data[i].XGCSWGS84.replace(",", "."));
+  	}
   }
+
+  return result;
 }
 
-preprocessData(stats_18_json)
-console.log(stats_18_json[0]);
-# %% [javascript]
-for (var i = 0; i < 100; i++) {
-    L.marker([stats_18_json[i].lat, stats_18_json[i].lng]).addTo(map);
-}
+combined_data = preprocessData(combined_data)
+console.log(combined_data.slice(0, 100));
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
-var pointCluster = new QCluster.PointClusterer(stats_18_json, "accidents", map, 'accid-layer',
+var pointCluster = new QCluster.PointClusterer(combined_data, "accidents", map, 'accid-layer',
                                             {
                                               reportingProperty: 'UKATEGORIE',
                                               backgroundColor: back_color,
@@ -126,23 +400,14 @@ var pointCluster = new QCluster.PointClusterer(stats_18_json, "accidents", map, 
                                               //defaultPalette: ['#BBE5ED', '#B399A2', '#784F41', '#660000'],
                                               defaultPalette: color_scheme
                                             });
-# %% [javascript]
-// remove pointCluster
-pointCluster.removeLayer()
-delete pointCluster;
-# %% [javascript]
-console.log(pointCluster.layer)
-# %% [javascript]
-console.log(pointCluster)
-# %% [javascript]
-// replace Points in pointCluser
-pointCluster.replacePoints(stats_18_json.slice(0,10000))
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 function applyFilters(filters) {
-  return stats_18_json.filter((datapoint) => {
+  return combined_data.filter((datapoint) => {
 
     for(var i = 0; i < filters.length; i++) {
       if(filters[i](datapoint)) {
@@ -164,9 +429,9 @@ function applyFilters(filters) {
 var road_values = ["trocken", "nass", "glatt"];
 
 var road_filters = [
-  datapoint => datapoint["STRZUSTAND"] == 0,
-  datapoint => datapoint["STRZUSTAND"] == 1,
-  datapoint => datapoint["STRZUSTAND"] == 2
+  datapoint => datapoint["USTRZUSTAND"] == 0,
+  datapoint => datapoint["USTRZUSTAND"] == 1,
+  datapoint => datapoint["USTRZUSTAND"] == 2
 ];
 
 
@@ -178,6 +443,22 @@ var light_filters = [
   datapoint => datapoint["ULICHTVERH"] == 2
 ];
 
+var year_values = ["2018", "2019", "2020", "2021"];
+
+var year_filters = [
+  datapoint => datapoint["UJAHR"] == 2018,
+  datapoint => datapoint["UJAHR"] == 2019,
+  datapoint => datapoint["UJAHR"] == 2020,
+  datapoint => datapoint["UJAHR"] == 2021
+];
+
+var type_values = ["Todesfall", "schwerverletzt", "leichtverletzt"];
+
+var type_filters = [
+  datapoint => datapoint["UKATEGORIE"] == 1,
+  datapoint => datapoint["UKATEGORIE"] == 2,
+  datapoint => datapoint["UKATEGORIE"] == 3
+];
 
 function checkboxClick(box) {
   var filters = [];
@@ -190,42 +471,79 @@ function checkboxClick(box) {
     if(!document.getElementById(`cb_light_${i+1}`).checked) {
       filters.push(light_filters[i]);
     }
+
+    if(!document.getElementById(`cb_year_${i+1}`).checked) {
+      filters.push(year_filters[i]);
+    }
+
+    if(!document.getElementById(`cb_type_${i+1}`).checked) {
+      filters.push(type_filters[i]);
+    }
   }
 
+  if(!document.getElementById(`cb_year_${4}`).checked) {
+      filters.push(year_filters[3]);
+  }
+  console.log(filters);
   var data = applyFilters(filters);
   console.log(data.length);
+  console.log(data[data.length-1])
   pointCluster.replacePoints(data);
 }
 
 function toggleFilters() {
   console.log("clicked");
-  var filter_div = document.getElementById("inner_container");// document.getElementsByClassName("my-control")[0];
+  var filter_div = document.getElementById("inner_container");
+  var outer_div = document.getElementsByClassName("my-control")[0];
+  var button = document.getElementById("hide_button");
 
   if (filter_div.style.display === "none") {
     filter_div.style.display = "block";
+    button.textContent = "expand_less";
+    
   } else {
     filter_div.style.display = "none";
+    button.textContent = "expand_more";
+    // outer_div.style.backgroundColor = "0x000";
   }
   console.log(filter_div);
 }
 
 
-var input_html = "<button type='hide' onclick='toggleFilters()'>Hide</button><br><br>";
-input_html += "<div id=inner_container><br>"
-input_html += "Straßenbeschaffenheit <br>\n";
+var input_html = "<button type='hide' class='material-symbols-outlined' id='hide_button' onclick='toggleFilters()'>expand_less</button>";
+input_html += "<span id = 'filter_top_heading'> Filter </span> <br>";
+input_html += "<div id=inner_container>";
 
-for(var i = 0; i < 3; i++) {
+input_html += "<p class = 'filter_header'>Jahr</p>";
+
+for(var i = 0; i < 4; i++) {
    
-  input_html += `<input type="checkbox" onchange="checkboxClick(this);" id="cb_road_${i+1}" checked> \n`
-  input_html += `<label for="cb_road_${i+1}">${road_values[i]}</label> \n`;
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_year_${i+1}" checked> \n`
+  input_html += `<label for="cb_year_${i+1}" class="cb_label">${year_values[i]}</label>\n<br>`;
 }
 
-input_html += "<br><br> Lichtverhältnisse <br>\n";
+input_html += "<br><p class = 'filter_header'>Unfallart</p>";
 
 for(var i = 0; i < 3; i++) {
    
-  input_html += `<input type="checkbox" onchange="checkboxClick(this);" id="cb_light_${i+1}" checked> \n`
-  input_html += `<label for="cb_light_${i+1}">${light_values[i]}</label> \n`;
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_type_${i+1}" checked> \n`
+  input_html += `<label for="cb_type_${i+1}" class="cb_label">${type_values[i]}</label> \n<br>`;
+}
+
+input_html += "<br><p class = 'filter_header'>Straßenbeschaffenheit</p>";
+
+for(var i = 0; i < 3; i++) {
+   
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_road_${i+1}" checked> \n`
+  input_html += `<label for="cb_road_${i+1}" class="cb_label">${road_values[i]}</label> \n<br>`;
+}
+
+input_html += "<br> <p class = 'filter_header'>Lichtverhältnisse </p>";
+
+for(var i = 0; i < 3; i++) {
+   
+  input_html += `<input type="checkbox" class="cb" onchange="checkboxClick(this);" id="cb_light_${i+1}" checked> \n`
+  input_html += `<label for="cb_light_${i+1}" class="cb_label">${light_values[i]}</label> \n<br>`;
 }
 
 input_html += "</div>";
@@ -251,5 +569,40 @@ L.control.myControl = function(opts) {
 }
 
 L.control.myControl({
-    position: 'topright'
+       position: 'topright'
+}).addTo(map);
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
+var input_html = "<div id='legend_content'><h4>Legende</h4>";
+input_html += "<div id = 'rect_1' class='type_rect'></div> <span class = 'legend_text'>Todesfall</span><br><br>";
+input_html += "<div id = 'rect_2' class='type_rect'></div> <span class = 'legend_text'>schwerverletzt</span><br><br>";
+input_html += "<div id = 'rect_3' class='type_rect'></div> <span class = 'legend_text'>leichtverletzt</span>";
+input_html += "</div>"
+
+L.Control.BaseLegend = L.Control.extend({
+  onAdd: function(map) {
+
+    var el = L.DomUtil.create('div', 'leaflet-bar base_legend');
+
+    el.innerHTML = input_html;
+    
+    
+    return el;
+  },
+
+  onRemove: function(map) {
+    // Nothing to do here
+  }
+});
+
+L.control.baseLegend = function(opts) {
+  return new L.Control.BaseLegend(opts);
+}
+
+L.control.baseLegend({
+      position: 'bottomleft'
 }).addTo(map);
