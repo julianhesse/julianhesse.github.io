@@ -69,7 +69,10 @@ console.log(stats_18_json[0]);
 #   run_on_load: true
 # ---%%
 var map = L.map('map').setView([52.533, 13.426], 14);
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
 var back_color = '#9A999F'
 var color_scheme = ['#0909D2','#FF7424','#DA0B2A','#111111']
 # %%--- [javascript]
