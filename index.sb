@@ -1,7 +1,9 @@
-# %%--- [markdown]
+# %%--- [css]
 # properties:
-#   locked: true
+#   top_hidden: true
+#   bottom_hidden: true
 # ---%%
+<<<<<<< HEAD
 ## Fahrrad-Unfälle Berlins der letzten Jahre
 # %% [markdown]
 Sehr geehrter Herr Kollowa, zuallererst wollen wir Ihnen Danken, dass Sie sich die Zeit nehmen, sich mit unserer Visualisierung zu beschäftigen. 
@@ -19,6 +21,8 @@ Die Berliner Senatsverwaltung für Wirtschaft, Energie und Betriebe stellt unter
 
 Von diesen haben wir die Unfälle herausgefiltert, an denen mindestens ein Fahrrad beteiligt war und haben darauf unsere interaktive Visualisierung aufgebaut. 
 # %% [css]
+=======
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 .cell-gutter, .cell-top {
     background-color: #fff;  /* Change this to #faf */
     
@@ -132,7 +136,15 @@ starboard-notebook {
   top: -3px;
 }
 
+<<<<<<< HEAD
 # %% [css]
+=======
+# %%--- [css]
+# properties:
+#   top_hidden: true
+#   bottom_hidden: true
+# ---%%
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 /* CSS for the map */
 #map {
   height: 600px;
@@ -163,7 +175,15 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
 } */
 
 
+<<<<<<< HEAD
 # %% [css]
+=======
+# %%--- [css]
+# properties:
+#   top_hidden: true
+#   bottom_hidden: true
+# ---%%
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 /* CSS for the legend */
  #legend {
     width: 42px;
@@ -199,10 +219,45 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
     border: 0;
     box-sizing: border-box;
 }
+<<<<<<< HEAD
 # %% [markdown]
+=======
+# %%--- [markdown]
+# properties:
+#   locked: true
+#   bottom_hidden: true
+# ---%%
+## Fahrrad-Unfälle Berlins von 2018 bis 2022
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
+Sehr geehrter Herr Kollowa, zuallererst wollen wir Ihnen Danken, dass Sie sich die Zeit nehmen, sich mit unserer Visualisierung zu beschäftigen. 
+
+Fahrradfahrende Menschen sind die gefährdetste Gruppe des Straßenverkehrs in der Stadt. Um den vielen Unfällen entgegenzuwirken und diese zu reduzieren, haben wir uns entschieden, dafür eine Visualisierung zu kreieren. Sie soll diese Unfälle aufzeigen und weitere Informationen zu diesen bereitstellen, um es Experten und Expertinnen zu erlauben, mögliche Zusammenhänge zu erschließen und folgende Leitfrage zu beantworten:
+# %%--- [html]
+# properties:
+#   run_on_load: true
+#   top_hidden: true
+# ---%%
+<p  align="center" class="cells-text"> Wo sind Hot-Spots für Fahrradunfälle und wo bedarf es dementsprechend im Verkehrswesen an Handlungsbedarf zur Erhöhung der Sicherheit?</p>
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
+## Woher kommen die Daten?
+
+Die Berliner Senatsverwaltung für Wirtschaft, Energie und Betriebe stellt unter dem Online-Service <https://daten.berlin.de/> eine Vielzahl von Datensätzen öffentlich zur Verfügung. Von dieser Seite haben wir uns vier Datensätze rausgegriffen, die unter dem Namen “Straßenverkehrsunfälle nach Unfallort in Berlin” für die Jahre 2018 bis 2021 veröffentlicht wurden. In jenen Datensätzen sind viele Informationen zu allen gemeldeten Unfällen Berlins angegeben. Verzeichnet sind unter anderem beteiligte Parteien (LKW, PKW, Fahrrad...), Straßen- und Lichtverhältnisse, GPS Daten und Schwere der resultierenden Verletzung.
+
+Von diesen haben wir die Unfälle herausgefiltert, an denen mindestens ein Fahrrad beteiligt war und haben darauf unsere interaktive Visualisierung aufgebaut. 
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 ## Wie ist die Visualisierung zu lesen?
 
-Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 dargestellt sind. Die Unfälle sind aufgeschlüsselt nach der schwere der zugezogenen Verletzung(en) der Beteiligten; von blau (leicht), über orange (schwer) bis rot (tödlich).
+Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 dargestellt sind. Die Unfälle sind aufgeschlüsselt nach der Schwere der zugezogenen Verletzung(en) der Beteiligten; von blau (leicht), über orange (schwer) bis rot (tödlich).
 
 \
 Die zugrundeliegende Karte ist eine Fahrrad-Karte von OpenStreetMap (<https://www.cyclosm.org/>). Hier sind grundsätzliche alle relevanten Verkehrsinformationen enthalten, aber insbesondere sind verschiedene Arten von Fahrrad-Wegen dargestellt. Diese Informationen können sie der OpenStreetMap-Legende entnehmen.
@@ -215,6 +270,7 @@ Des weiteren gibt es Filterfunktionen, die es erlauben, zu kontrollieren welche 
 # %%--- [html]
 # properties:
 #   run_on_load: true
+#   top_hidden: true
 # ---%%
 <div id="map"></div>
 <div id="legend">
@@ -224,6 +280,8 @@ Des weiteren gibt es Filterfunktionen, die es erlauben, zu kontrollieren welche 
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 resp = await fetch("./json_files/data_2018.json");
 var stats_18_json = await resp.json();
@@ -238,6 +296,7 @@ var stats_21_json = await resp.json();
 var combined_data = stats_18_json.concat(stats_19_json.concat(stats_20_json.concat(stats_21_json)));// stats_19_json.concat(stats_18_json);
 console.log(combined_data.length);
 console.log(combined_data[0]);
+<<<<<<< HEAD
 # %% [javascript]
 console.log(combined_data[combined_data.length -1 ])
 console.log(combined_data[0])
@@ -246,15 +305,21 @@ console.log(combined_data[0])
 #   run_on_load: true
 # ---%%
 var map = L.map('map').setView([52.533, 13.426], 14);
+=======
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 var back_color = '#9A999F'
 var color_scheme = ['#0909D2','#FF7424','#DA0B2A','#111111']
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 // Add map tiles (the actual map)
 var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
@@ -264,6 +329,7 @@ var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}
             }).addTo(map);
 // Add a scale
 L.control.scale().addTo(map);
+<<<<<<< HEAD
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
@@ -318,9 +384,69 @@ document.querySelector('#legend button').addEventListener('click', function (eve
     }
     map.invalidateSize();
 });
+=======
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
+// =============
+// Handle legend
+// =============
+function handleResize() {
+    var shouldLegendOpen = true;
+
+    if (screen.width > 800) {
+        shouldLegendOpen = true;
+    } else {
+        shouldLegendOpen = false;
+    }
+
+    if (shouldLegendOpen) {
+        //document.querySelector('#map').style.right = '300px';
+        document.querySelector('#map').style.width = '680px';
+        document.querySelector('#legend .iframe').style.display = 'initial';
+        document.querySelector('#legend').style.width = '300px';
+        //document.querySelector('#legend').style.marginLeft = '650px';
+        document.querySelector('#legend button').innerText = '❯';
+    } else {
+        //document.querySelector('#map').style.right = '42px';
+        document.querySelector('#map').style.width = '938px';
+        document.querySelector('#legend .iframe').style.display = 'none';
+        document.querySelector('#legend').style.width = '42px';
+        //document.querySelector('#legend').style.marginLeft = '908px';
+        document.querySelector('#legend button').innerText = '❮';
+    }
+}
+handleResize();
+window.addEventListener('resize', handleResize());
+document.querySelector('#legend button').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    if (document.querySelector('#legend button').innerText == '❮') {
+        //document.querySelector('#map').style.right = '300px';
+        document.querySelector('#map').style.width = '680px';
+        document.querySelector('#legend .iframe').style.display = 'initial';
+        document.querySelector('#legend').style.width = '300px';
+        //document.querySelector('#legend').style.marginLeft = '650px';
+        document.querySelector('#legend button').innerText = '❯';
+    } else {
+        //document.querySelector('#map').style.right = '42px';
+        document.querySelector('#map').style.width = '938px';
+        document.querySelector('#legend .iframe').style.display = 'none';
+        document.querySelector('#legend').style.width = '42px';
+        //document.querySelector('#legend').style.marginLeft = '908px';
+        document.querySelector('#legend button').innerText = '❮';
+    }
+    map.invalidateSize();
+});
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 function preprocessData(data) {
   var result = [];
@@ -354,6 +480,7 @@ function preprocessData(data) {
     	result[i].lng = parseFloat(data[i].XGCSWGS84.replace(",", "."));
   	}
   }
+<<<<<<< HEAD
 
   return result;
 }
@@ -365,9 +492,19 @@ for (var i = 0; i < 100; i++) {
     L.marker([combined_data[i].lat, combined_data[i].lng]).addTo(map);
 }
 console.log(combined_data)
+=======
+
+  return result;
+}
+
+combined_data = preprocessData(combined_data)
+console.log(combined_data.slice(0, 100));
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 var pointCluster = new QCluster.PointClusterer(combined_data, "accidents", map, 'accid-layer',
                                             {
@@ -377,6 +514,7 @@ var pointCluster = new QCluster.PointClusterer(combined_data, "accidents", map, 
                                               //defaultPalette: ['#BBE5ED', '#B399A2', '#784F41', '#660000'],
                                               defaultPalette: color_scheme
                                             });
+<<<<<<< HEAD
 # %% [javascript]
 // remove pointCluster
 pointCluster.removeLayer()
@@ -388,9 +526,13 @@ console.log(pointCluster)
 # %% [javascript]
 // replace Points in pointCluser
 pointCluster.replacePoints(combined_data.slice(0,10000))
+=======
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 function applyFilters(filters) {
   return combined_data.filter((datapoint) => {
@@ -509,6 +651,7 @@ for(var i = 0; i < 4; i++) {
 }
 
 input_html += "<br><p class = 'filter_header'>Unfallart</p>";
+<<<<<<< HEAD
 
 for(var i = 0; i < 3; i++) {
    
@@ -528,6 +671,27 @@ input_html += "<br> <p class = 'filter_header'>Lichtverhältnisse </p>";
 
 for(var i = 0; i < 3; i++) {
    
+=======
+
+for(var i = 0; i < 3; i++) {
+   
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_type_${i+1}" checked> \n`
+  input_html += `<label for="cb_type_${i+1}" class="cb_label">${type_values[i]}</label> \n<br>`;
+}
+
+input_html += "<br><p class = 'filter_header'>Straßenbeschaffenheit</p>";
+
+for(var i = 0; i < 3; i++) {
+   
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_road_${i+1}" checked> \n`
+  input_html += `<label for="cb_road_${i+1}" class="cb_label">${road_values[i]}</label> \n<br>`;
+}
+
+input_html += "<br> <p class = 'filter_header'>Lichtverhältnisse </p>";
+
+for(var i = 0; i < 3; i++) {
+   
+>>>>>>> 165648917572ad0f45f361871387151be1157929
   input_html += `<input type="checkbox" class="cb" onchange="checkboxClick(this);" id="cb_light_${i+1}" checked> \n`
   input_html += `<label for="cb_light_${i+1}" class="cb_label">${light_values[i]}</label> \n<br>`;
 }
@@ -560,6 +724,11 @@ L.control.myControl({
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+<<<<<<< HEAD
+=======
+#   bottom_hidden: true
+#   top_hidden: true
+>>>>>>> 165648917572ad0f45f361871387151be1157929
 # ---%%
 var input_html = "<div id='legend_content'><h4>Legende</h4>";
 input_html += "<div id = 'rect_1' class='type_rect'></div> <span class = 'legend_text'>Todesfall</span><br><br>";
