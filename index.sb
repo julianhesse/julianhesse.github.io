@@ -1,24 +1,8 @@
-# %%--- [markdown]
+# %%--- [css]
 # properties:
-#   locked: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
-## Fahrrad-Unfälle Berlins der letzten Jahre
-# %% [markdown]
-Sehr geehrter Herr Kollowa, zuallererst wollen wir Ihnen Danken, dass Sie sich die Zeit nehmen, sich mit unserer Visualisierung zu beschäftigen. 
-
-Fahrradfahrende Menschen sind die gefährdetste Gruppe des Straßenverkehrs in der Stadt. Um den vielen Unfällen entgegenzuwirken und diese zu reduzieren, haben wir uns entschieden, dafür eine Visualisierung zu kreieren. Sie soll diese Unfälle aufzeigen und weitere Informationen zu diesen bereitstellen, um es Experten und Expertinnen zu erlauben, mögliche Zusammenhänge zu erschließen und folgende Leitfrage zu beantworten:
-# %%--- [html]
-# properties:
-#   run_on_load: true
-# ---%%
-<p  align="center" class="cells-text"> Wo sind Hot-Spots für Fahrradunfälle und wo bedarf es dementsprechend im Verkehrswesen an Handlungsbedarf zur Erhöhung der Sicherheit?</p>
-# %% [markdown]
-## Woher kommen die Daten?
-
-Die Berliner Senatsverwaltung für Wirtschaft, Energie und Betriebe stellt unter dem Online-Service <https://daten.berlin.de/> eine Vielzahl von Datensätzen öffentlich zur Verfügung. Von dieser Seite haben wir uns vier Datensätze rausgegriffen, die unter dem Namen “Straßenverkehrsunfälle nach Unfallort in Berlin” für die Jahre 2018 bis 2021 veröffentlicht wurden. In jenen Datensätzen sind viele Informationen zu allen gemeldeten Unfällen Berlins angegeben. Verzeichnet sind unter anderem beteiligte Parteien (LKW, PKW, Fahrrad...), Straßen- und Lichtverhältnisse, GPS Daten und Schwere der resultierenden Verletzung.
-
-Von diesen haben wir die Unfälle herausgefiltert, an denen mindestens ein Fahrrad beteiligt war und haben darauf unsere interaktive Visualisierung aufgebaut. 
-# %% [css]
 .cell-gutter, .cell-top {
     background-color: #fff;  /* Change this to #faf */
     
@@ -132,7 +116,11 @@ starboard-notebook {
   top: -3px;
 }
 
-# %% [css]
+# %%--- [css]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 /* CSS for the map */
 #map {
   height: 600px;
@@ -151,6 +139,12 @@ div.leaflet-marker-icon.q-marker-cluster:hover {
   opacity: 0.4;
   background-color: transparent;
 }
+
+div.leaflet-marker-icon.q-marker-cluster{
+  fill-opacity: 1;
+  opacity: 0.8;
+  background-color: transparent;
+}
 /*
 div.leaflet-marker-icon.q-marker-cluster:hover > div {
   fill-opacity: 0;
@@ -163,7 +157,11 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
 } */
 
 
-# %% [css]
+# %%--- [css]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 /* CSS for the legend */
  #legend {
     width: 42px;
@@ -199,10 +197,41 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
     border: 0;
     box-sizing: border-box;
 }
-# %% [markdown]
+# %%--- [markdown]
+# properties:
+#   locked: true
+#   bottom_hidden: true
+# ---%%
+## Fahrrad-Unfälle Berlins der letzten Jahre
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
+Sehr geehrter Herr Kollowa, zuallererst wollen wir Ihnen Danken, dass Sie sich die Zeit nehmen, sich mit unserer Visualisierung zu beschäftigen. 
+
+Fahrradfahrende Menschen sind die gefährdetste Gruppe des Straßenverkehrs in der Stadt. Um den vielen Unfällen entgegenzuwirken und diese zu reduzieren, haben wir uns entschieden, dafür eine Visualisierung zu kreieren. Sie soll diese Unfälle aufzeigen und weitere Informationen zu diesen bereitstellen, um es Experten und Expertinnen zu erlauben, mögliche Zusammenhänge zu erschließen und folgende Leitfrage zu beantworten:
+# %%--- [html]
+# properties:
+#   run_on_load: true
+#   top_hidden: true
+# ---%%
+<p  align="center" class="cells-text"> Wo sind Hot-Spots für Fahrradunfälle und wo bedarf es dementsprechend im Verkehrswesen an Handlungsbedarf zur Erhöhung der Sicherheit?</p>
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
+## Woher kommen die Daten?
+
+Die Berliner Senatsverwaltung für Wirtschaft, Energie und Betriebe stellt unter dem Online-Service <https://daten.berlin.de/> eine Vielzahl von Datensätzen öffentlich zur Verfügung. Von dieser Seite haben wir uns vier Datensätze rausgegriffen, die unter dem Namen “Straßenverkehrsunfälle nach Unfallort in Berlin” für die Jahre 2018 bis 2021 veröffentlicht wurden. In jenen Datensätzen sind viele Informationen zu allen gemeldeten Unfällen Berlins angegeben. Verzeichnet sind unter anderem beteiligte Parteien (LKW, PKW, Fahrrad...), Straßen- und Lichtverhältnisse, GPS Daten und Schwere der resultierenden Verletzung.
+
+Von diesen haben wir die Unfälle herausgefiltert, an denen mindestens ein Fahrrad beteiligt war und haben darauf unsere interaktive Visualisierung aufgebaut. 
+# %%--- [markdown]
+# properties:
+#   bottom_hidden: true
+# ---%%
 ## Wie ist die Visualisierung zu lesen?
 
-Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 dargestellt sind. Die Unfälle sind aufgeschlüsselt nach der schwere der zugezogenen Verletzung(en) der Beteiligten; von blau (leicht), über orange (schwer) bis rot (tödlich).
+Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 dargestellt sind. Die Unfälle sind aufgeschlüsselt nach der Schwere der zugezogenen Verletzung(en) der Beteiligten; von blau (leicht), über orange (schwer) bis rot (tödlich).
 
 \
 Die zugrundeliegende Karte ist eine Fahrrad-Karte von OpenStreetMap (<https://www.cyclosm.org/>). Hier sind grundsätzliche alle relevanten Verkehrsinformationen enthalten, aber insbesondere sind verschiedene Arten von Fahrrad-Wegen dargestellt. Diese Informationen können sie der OpenStreetMap-Legende entnehmen.
@@ -215,6 +244,7 @@ Des weiteren gibt es Filterfunktionen, die es erlauben, zu kontrollieren welche 
 # %%--- [html]
 # properties:
 #   run_on_load: true
+#   top_hidden: true
 # ---%%
 <div id="map"></div>
 <div id="legend">
@@ -224,6 +254,8 @@ Des weiteren gibt es Filterfunktionen, die es erlauben, zu kontrollieren welche 
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 resp = await fetch("./json_files/data_2018.json");
 var stats_18_json = await resp.json();
@@ -238,23 +270,33 @@ var stats_21_json = await resp.json();
 var combined_data = stats_18_json.concat(stats_19_json.concat(stats_20_json.concat(stats_21_json)));// stats_19_json.concat(stats_18_json);
 console.log(combined_data.length);
 console.log(combined_data[0]);
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 console.log(combined_data[combined_data.length -1 ])
 console.log(combined_data[0])
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 var map = L.map('map').setView([52.533, 13.426], 14);
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 var back_color = '#9A999F'
 var color_scheme = ['#0909D2','#FF7424','#DA0B2A','#111111']
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 // Add map tiles (the actual map)
 var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
@@ -267,6 +309,8 @@ L.control.scale().addTo(map);
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 // =============
 // Handle legend
@@ -321,6 +365,8 @@ document.querySelector('#legend button').addEventListener('click', function (eve
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 function preprocessData(data) {
   var result = [];
@@ -360,7 +406,11 @@ function preprocessData(data) {
 
 combined_data = preprocessData(combined_data)
 console.log(combined_data.slice(0, 100));
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 for (var i = 0; i < 100; i++) {
     L.marker([combined_data[i].lat, combined_data[i].lng]).addTo(map);
 }
@@ -368,6 +418,8 @@ console.log(combined_data)
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 var pointCluster = new QCluster.PointClusterer(combined_data, "accidents", map, 'accid-layer',
                                             {
@@ -377,20 +429,38 @@ var pointCluster = new QCluster.PointClusterer(combined_data, "accidents", map, 
                                               //defaultPalette: ['#BBE5ED', '#B399A2', '#784F41', '#660000'],
                                               defaultPalette: color_scheme
                                             });
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 // remove pointCluster
 pointCluster.removeLayer()
 delete pointCluster;
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 console.log(pointCluster.layer)
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 console.log(pointCluster)
-# %% [javascript]
+# %%--- [javascript]
+# properties:
+#   bottom_hidden: true
+#   top_hidden: true
+# ---%%
 // replace Points in pointCluser
 pointCluster.replacePoints(combined_data.slice(0,10000))
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 function applyFilters(filters) {
   return combined_data.filter((datapoint) => {
@@ -560,6 +630,8 @@ L.control.myControl({
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
+#   bottom_hidden: true
+#   top_hidden: true
 # ---%%
 var input_html = "<div id='legend_content'><h4>Legende</h4>";
 input_html += "<div id = 'rect_1' class='type_rect'></div> <span class = 'legend_text'>Todesfall</span><br><br>";
