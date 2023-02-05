@@ -177,7 +177,7 @@ function handleResize() {
         document.querySelector('#legend button').innerText = '❯';
     } else {
         //document.querySelector('#map').style.right = '42px';
-        document.querySelector('#map').style.width = '937px';
+        document.querySelector('#map').style.width = '938px';
         document.querySelector('#legend .iframe').style.display = 'none';
         document.querySelector('#legend').style.width = '42px';
         //document.querySelector('#legend').style.marginLeft = '908px';
@@ -198,7 +198,7 @@ document.querySelector('#legend button').addEventListener('click', function (eve
         document.querySelector('#legend button').innerText = '❯';
     } else {
         //document.querySelector('#map').style.right = '42px';
-        document.querySelector('#map').style.width = '937px';
+        document.querySelector('#map').style.width = '938px';
         document.querySelector('#legend .iframe').style.display = 'none';
         document.querySelector('#legend').style.width = '42px';
         //document.querySelector('#legend').style.marginLeft = '908px';
