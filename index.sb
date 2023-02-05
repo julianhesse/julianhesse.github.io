@@ -3,6 +3,21 @@
 #   locked: true
 # ---%%
 ## Fahrrad-Unfälle Berlins der letzten Jahre
+# %% [markdown]
+Sehr geehrter Herr Kollowa, zuallererst wollen wir Ihnen Danken, dass Sie sich die Zeit nehmen, sich mit unserer Visualisierung zu beschäftigen. 
+
+Fahrradfahrende Menschen sind die gefährdetste Gruppe des Straßenverkehrs in der Stadt. Um den vielen Unfällen entgegenzuwirken und diese zu reduzieren, haben wir uns entschieden, dafür eine Visualisierung zu kreieren. Sie soll diese Unfälle aufzeigen und weitere Informationen zu diesen bereitstellen, um es Experten und Expertinnen zu erlauben, mögliche Zusammenhänge zu erschließen und folgende Leitfrage zu beantworten:
+
+\
+
+# %% [html]
+<p  align="center" class="cells-text"> Wo sind Hot-Spots für Fahrradunfälle und wo bedarf es dementsprechend im Verkehrswesen an Handlungsbedarf zur Erhöhung der Sicherheit?</p>
+# %% [markdown]
+## Woher kommen die Daten?
+
+Die Berliner Senatsverwaltung für Wirtschaft, Energie und Betriebe stellt unter dem Online-Service <https://daten.berlin.de/> eine Vielzahl von Datensätzen öffentlich zur Verfügung. Von dieser Seite haben wir uns vier Datensätze rausgegriffen, die unter dem Namen “Straßenverkehrsunfälle nach Unfallort in Berlin” für die Jahre 2018 bis 2021 veröffentlicht wurden. In jenen Datensätzen sind viele Informationen zu allen gemeldeten Unfällen Berlins angegeben. Verzeichnet sind unter anderem beteiligte Parteien (LKW, PKW, Fahrrad...), Straßen- und Lichtverhältnisse, GPS Daten und Schwere der resultierenden Verletzung.
+
+Von diesen haben wir die Unfälle herausgefiltert, an denen mindestens ein Fahrrad beteiligt war und haben darauf unsere interaktive Visualisierung aufgebaut. 
 # %% [css]
 .cell-gutter, .cell-top {
     background-color: #fff;  /* Change this to #faf */
@@ -26,6 +41,11 @@ starboard-notebook {
 
 .cells-container {
   	background-color: #000;
+}
+
+.cells-text {
+  	background-color: #000;
+  	color: #fff;
 }
 
 .my-control {
