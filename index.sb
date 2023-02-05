@@ -75,12 +75,12 @@ starboard-notebook {
 }
 
 #rect_2 {
-  background-color: #0909D2;
+  background-color: #FF7424;
 }
 
 #rect_3 {
  
-  background-color: #FF7424;
+  background-color: #0909D2;
   
 }
 
