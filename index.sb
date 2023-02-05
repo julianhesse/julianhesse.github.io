@@ -29,7 +29,86 @@ starboard-notebook {
 }
 
 .my-control {
-   background-color: #fff
+   background-color: rgba(255, 255, 255,0.9);
+   width: 140px;
+}
+
+.base_legend {
+   background-color: rgba(255, 255, 255,0.9);
+   width: 130px;
+}
+
+.legend_text {
+  position: relative;
+  top: -2px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+#legend_content {
+  padding: 5px 20px 5px 5px;
+}
+
+#rect_1 {
+  background-color: black;
+}
+
+#rect_2 {
+  background-color: red;
+}
+
+#rect_3 {
+ 
+  background-color: blue;
+  
+}
+
+.type_rect {
+   width: 25px;
+  height: 10px;
+  display:inline-block;
+}
+
+
+
+.cb {
+  margin-left: 10px;
+}
+
+.cb_label {
+  top: -3px;
+  position: relative;
+  margin-right: 5px;
+}
+
+.filter_header {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+#hide_button {
+  
+  position: relative;
+  top: 3px;
+  background-color: rgba(255, 255, 255,0.9);
+  border: none;
+  
+  // right: 0px;
+  
+}
+
+#inner_container {
+  
+  margin-bot: 10px;
+  padding: 5px 0px 5px 0px;
+  display: block;
+}
+
+#filter_top_heading {
+  position: relative;
+  font-weight: bold;
+  font-size: 20px;
+  top: -3px;
 }
 
 # %% [css]
@@ -62,8 +141,17 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
 # ---%%
 resp = await fetch("./json_files/data_2018.json");
 var stats_18_json = await resp.json();
+resp = await fetch("./json_files/data_2019.json");
+var stats_19_json = await resp.json();
+resp = await fetch("./json_files/data_2020.json");
+var stats_20_json = await resp.json();
+resp = await fetch("./json_files/data_2021.json");
+var stats_21_json = await resp.json();
 
-console.log(stats_18_json[0]);
+// .concat(stats_20_json.concat(stats_21_json))
+var combined_data = stats_18_json.concat(stats_19_json);
+console.log(combined_data.length);
+console.log(combined_data[0]);
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
@@ -89,17 +177,17 @@ function preprocessData(data) {
   }
 }
 
-preprocessData(stats_18_json)
-console.log(stats_18_json[0]);
+preprocessData(combined_data)
+console.log(combined_data[0]);
 # %% [javascript]
 for (var i = 0; i < 100; i++) {
-    L.marker([stats_18_json[i].lat, stats_18_json[i].lng]).addTo(map);
+    L.marker([combined_data[i].lat, combined_data[i].lng]).addTo(map);
 }
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
 # ---%%
-var pointCluster = new QCluster.PointClusterer(stats_18_json, "accidents", map, 'accid-layer',
+var pointCluster = new QCluster.PointClusterer(combined_data, "accidents", map, 'accid-layer',
                                             {
                                               reportingProperty: 'UKATEGORIE',
                                               backgroundColor: '#0099dd',
@@ -117,13 +205,13 @@ console.log(pointCluster.layer)
 console.log(pointCluster)
 # %% [javascript]
 // replace Points in pointCluser
-pointCluster.replacePoints(stats_18_json.slice(0,10000))
+pointCluster.replacePoints(combined_data.slice(0,10000))
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
 # ---%%
 function applyFilters(filters) {
-  return stats_18_json.filter((datapoint) => {
+  return combined_data.filter((datapoint) => {
 
     for(var i = 0; i < filters.length; i++) {
       if(filters[i](datapoint)) {
@@ -159,6 +247,22 @@ var light_filters = [
   datapoint => datapoint["ULICHTVERH"] == 2
 ];
 
+var year_values = ["2018", "2019", "2020", "2021"];
+
+var year_filters = [
+  datapoint => datapoint["UJAHR"] == 2018,
+  datapoint => datapoint["UJAHR"] == 2019,
+  datapoint => datapoint["UJAHR"] == 2020,
+  datapoint => datapoint["UJAHR"] == 2021
+];
+
+var type_values = ["Todesfall", "schwerverletzt", "leichtverletzt"];
+
+var type_filters = [
+  datapoint => datapoint["UKATEGORIE"] == 1,
+  datapoint => datapoint["UKATEGORIE"] == 2,
+  datapoint => datapoint["UKATEGORIE"] == 3
+];
 
 function checkboxClick(box) {
   var filters = [];
@@ -171,6 +275,18 @@ function checkboxClick(box) {
     if(!document.getElementById(`cb_light_${i+1}`).checked) {
       filters.push(light_filters[i]);
     }
+
+    if(!document.getElementById(`cb_year_${i+1}`).checked) {
+      filters.push(year_filters[i]);
+    }
+
+    if(!document.getElementById(`cb_type_${i+1}`).checked) {
+      filters.push(type_filters[i]);
+    }
+  }
+
+  if(!document.getElementById(`cb_year_${4}`).checked) {
+      filters.push(type_filters[3]);
   }
 
   var data = applyFilters(filters);
@@ -180,33 +296,57 @@ function checkboxClick(box) {
 
 function toggleFilters() {
   console.log("clicked");
-  var filter_div = document.getElementById("inner_container");// document.getElementsByClassName("my-control")[0];
+  var filter_div = document.getElementById("inner_container");
+  var outer_div = document.getElementsByClassName("my-control")[0];
+  var button = document.getElementById("hide_button");
 
   if (filter_div.style.display === "none") {
     filter_div.style.display = "block";
+    button.textContent = "expand_less";
+    
   } else {
     filter_div.style.display = "none";
+    button.textContent = "expand_more";
+    // outer_div.style.backgroundColor = "0x000";
   }
   console.log(filter_div);
 }
 
 
-var input_html = "<button type='hide' onclick='toggleFilters()'>Hide</button><br><br>";
-input_html += "<div id=inner_container><br>"
-input_html += "Straßenbeschaffenheit <br>\n";
+var input_html = "<button type='hide' class='material-symbols-outlined' id='hide_button' onclick='toggleFilters()'>expand_less</button>";
+input_html += "<span id = 'filter_top_heading'> Filter </span> <br>";
+input_html += "<div id=inner_container>";
 
-for(var i = 0; i < 3; i++) {
+input_html += "<p class = 'filter_header'>Jahr</p>";
+
+for(var i = 0; i < 4; i++) {
    
-  input_html += `<input type="checkbox" onchange="checkboxClick(this);" id="cb_road_${i+1}" checked> \n`
-  input_html += `<label for="cb_road_${i+1}">${road_values[i]}</label> \n`;
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_year_${i+1}" checked> \n`
+  input_html += `<label for="cb_year_${i+1}" class="cb_label">${year_values[i]}</label>\n<br>`;
 }
 
-input_html += "<br><br> Lichtverhältnisse <br>\n";
+input_html += "<br><p class = 'filter_header'>Unfallart</p>";
 
 for(var i = 0; i < 3; i++) {
    
-  input_html += `<input type="checkbox" onchange="checkboxClick(this);" id="cb_light_${i+1}" checked> \n`
-  input_html += `<label for="cb_light_${i+1}">${light_values[i]}</label> \n`;
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_type_${i+1}" checked> \n`
+  input_html += `<label for="cb_type_${i+1}" class="cb_label">${type_values[i]}</label> \n<br>`;
+}
+
+input_html += "<br><p class = 'filter_header'>Straßenbeschaffenheit</p>";
+
+for(var i = 0; i < 3; i++) {
+   
+  input_html += `<input type="checkbox" class ="cb" onchange="checkboxClick(this);" id="cb_road_${i+1}" checked> \n`
+  input_html += `<label for="cb_road_${i+1}" class="cb_label">${road_values[i]}</label> \n<br>`;
+}
+
+input_html += "<br> <p class = 'filter_header'>Lichtverhältnisse </p>";
+
+for(var i = 0; i < 3; i++) {
+   
+  input_html += `<input type="checkbox" class="cb" onchange="checkboxClick(this);" id="cb_light_${i+1}" checked> \n`
+  input_html += `<label for="cb_light_${i+1}" class="cb_label">${light_values[i]}</label> \n<br>`;
 }
 
 input_html += "</div>";
@@ -232,5 +372,38 @@ L.control.myControl = function(opts) {
 }
 
 L.control.myControl({
-    position: 'topright'
+      position: 'topright'
+}).addTo(map);
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
+var input_html = "<div id='legend_content'><h4>Legende</h4>";
+input_html += "<div id = 'rect_1' class='type_rect'></div> <span class = 'legend_text'>Todesfall</span><br><br>";
+input_html += "<div id = 'rect_2' class='type_rect'></div> <span class = 'legend_text'>schwerverletzt</span><br><br>";
+input_html += "<div id = 'rect_3' class='type_rect'></div> <span class = 'legend_text'>leichtverletzt</span>";
+input_html += "</div>"
+
+L.Control.BaseLegend = L.Control.extend({
+  onAdd: function(map) {
+
+    var el = L.DomUtil.create('div', 'leaflet-bar base_legend');
+
+    el.innerHTML = input_html;
+    
+    
+    return el;
+  },
+
+  onRemove: function(map) {
+    // Nothing to do here
+  }
+});
+
+L.control.baseLegend = function(opts) {
+  return new L.Control.BaseLegend(opts);
+}
+
+L.control.baseLegend({
+      position: 'bottomleft'
 }).addTo(map);
