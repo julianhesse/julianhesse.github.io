@@ -69,6 +69,9 @@ console.log(stats_18_json[0]);
 #   run_on_load: true
 # ---%%
 var map = L.map('map').setView([52.533, 13.426], 14);
+# %% [javascript]
+var back_color = '#9A999F'
+var color_scheme = ['#0909D2','#FF7424','#DA0B2A','#111111']
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
@@ -102,10 +105,10 @@ for (var i = 0; i < 100; i++) {
 var pointCluster = new QCluster.PointClusterer(stats_18_json, "accidents", map, 'accid-layer',
                                             {
                                               reportingProperty: 'UKATEGORIE',
-                                              backgroundColor: '#0099dd',
+                                              backgroundColor: back_color,
                                               clusterTolerance: 100,
                                               //defaultPalette: ['#BBE5ED', '#B399A2', '#784F41', '#660000'],
-                                              defaultPalette: ['#0909D2', '#D80F41', '#111111', '#660000']
+                                              defaultPalette: color_scheme
                                             });
 # %% [javascript]
 // remove pointCluster
