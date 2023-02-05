@@ -234,9 +234,12 @@ resp = await fetch("./json_files/data_2021.json");
 var stats_21_json = await resp.json();
 
 // .concat(stats_20_json.concat(stats_21_json))
-var combined_data = stats_18_json.concat(stats_19_json);
+var combined_data = stats_18_json.concat(stats_19_json.concat(stats_20_json.concat(stats_21_json)));// stats_19_json.concat(stats_18_json);
 console.log(combined_data.length);
 console.log(combined_data[0]);
+# %% [javascript]
+console.log(combined_data[combined_data.length -1 ])
+console.log(combined_data[0])
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
@@ -319,18 +322,48 @@ document.querySelector('#legend button').addEventListener('click', function (eve
 #   run_on_load: true
 # ---%%
 function preprocessData(data) {
+  var result = [];
   for (var i = 0; i < data.length; i++) {
-    data[i].lat = data[i].YGCSWGS84;
-    data[i].lng = data[i].XGCSWGS84;
+	var point = data[i];
+    result.push({"UKATEGORIE" : point["UKATEGORIE"], "ULICHTVERH" : point["ULICHTVERH"], 
+                 "ULICHTVERH" : point["ULICHTVERH"],
+                 "UJAHR" : point["UJAHR"]});
+
+    
+	
+    if(result[i]["UJAHR"] == 2019) {
+
+      	result[i]["USTRZUSTAND"] = point["USTRZUSTAND"];
+        var y_str = data[i].YGCSWGS84.toString();
+      	var x_str = data[i].XGCSWGS84.toString();
+
+      	result[i].lat = parseFloat([y_str.slice(0, 2), ".", y_str.slice(2, y_str.length)].join(''));
+      	result[i].lng = parseFloat([x_str.slice(0, 2), ".", x_str.slice(2, x_str.length)].join(''));
+    }
+      
+    else if(result[i]["UJAHR"] == 2018) {
+        result[i]["STRZUSTAND"] = point["STRZUSTAND"]
+      	result[i].lat = data[i].YGCSWGS84;
+    	result[i].lng = data[i].XGCSWGS84;
+    }
+      
+    else {
+        result[i]["USTRZUSTAND"] = point["USTRZUSTAND"]
+    	result[i].lat = parseFloat(data[i].YGCSWGS84.replace(",", "."));
+    	result[i].lng = parseFloat(data[i].XGCSWGS84.replace(",", "."));
+  	}
   }
+
+  return result;
 }
 
-preprocessData(combined_data)
-console.log(combined_data[0]);
+combined_data = preprocessData(combined_data)
+console.log(combined_data.slice(0, 100));
 # %% [javascript]
 for (var i = 0; i < 100; i++) {
     L.marker([combined_data[i].lat, combined_data[i].lng]).addTo(map);
 }
+console.log(combined_data)
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
@@ -381,9 +414,9 @@ function applyFilters(filters) {
 var road_values = ["trocken", "nass", "glatt"];
 
 var road_filters = [
-  datapoint => datapoint["STRZUSTAND"] == 0,
-  datapoint => datapoint["STRZUSTAND"] == 1,
-  datapoint => datapoint["STRZUSTAND"] == 2
+  datapoint => datapoint["USTRZUSTAND"] == 0,
+  datapoint => datapoint["USTRZUSTAND"] == 1,
+  datapoint => datapoint["USTRZUSTAND"] == 2
 ];
 
 
@@ -434,11 +467,12 @@ function checkboxClick(box) {
   }
 
   if(!document.getElementById(`cb_year_${4}`).checked) {
-      filters.push(type_filters[3]);
+      filters.push(year_filters[3]);
   }
-
+  console.log(filters);
   var data = applyFilters(filters);
   console.log(data.length);
+  console.log(data[data.length-1])
   pointCluster.replacePoints(data);
 }
 
@@ -520,7 +554,7 @@ L.control.myControl = function(opts) {
 }
 
 L.control.myControl({
-      position: 'topright'
+       position: 'topright'
 }).addTo(map);
 # %%--- [javascript]
 # properties:
