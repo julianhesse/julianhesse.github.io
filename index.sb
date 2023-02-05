@@ -7,10 +7,10 @@
 Sehr geehrter Herr Kollowa, zuallererst wollen wir Ihnen Danken, dass Sie sich die Zeit nehmen, sich mit unserer Visualisierung zu beschäftigen. 
 
 Fahrradfahrende Menschen sind die gefährdetste Gruppe des Straßenverkehrs in der Stadt. Um den vielen Unfällen entgegenzuwirken und diese zu reduzieren, haben wir uns entschieden, dafür eine Visualisierung zu kreieren. Sie soll diese Unfälle aufzeigen und weitere Informationen zu diesen bereitstellen, um es Experten und Expertinnen zu erlauben, mögliche Zusammenhänge zu erschließen und folgende Leitfrage zu beantworten:
-
-\
-
-# %% [html]
+# %%--- [html]
+# properties:
+#   run_on_load: true
+# ---%%
 <p  align="center" class="cells-text"> Wo sind Hot-Spots für Fahrradunfälle und wo bedarf es dementsprechend im Verkehrswesen an Handlungsbedarf zur Erhöhung der Sicherheit?</p>
 # %% [markdown]
 ## Woher kommen die Daten?
