@@ -596,8 +596,8 @@ var QCluster = (function(module){
 			return;
 		}
 		// When the user click on a cluster that can be made active (i.e., less than 20 points), the map centers on that cluster
-		// Of course, when that happens, the old clusters/layer gets destoyed and remade.  Thus we lose reference to the cluster
-		// that we clicked to make active.  However, the lat/lng of the orginally clicked cluster, will be identical to the new
+		// Of course, when that happens, the old clusters/layer gets destroyed and remade.  Thus we lose reference to the cluster
+		// that we clicked to make active.  However, the lat/lng of the originally clicked cluster, will be identical to the new
 		// cluster that should be made active
 		
 		// Loop thru all the 'markers' (aka _layers) in the map layer 

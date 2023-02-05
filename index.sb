@@ -33,7 +33,18 @@ starboard-notebook {
 }
 
 # %% [css]
-#map { height: 600px; }
+/* CSS for the map */
+#map {
+  height: 600px;
+  /*width: 907 px;*/
+  width: 95%;
+  display: flex;
+  float: left;
+  /*
+  display: table-cell;
+  */
+  /*position: relative;*/
+}
 
 div.leaflet-marker-icon.q-marker-cluster:hover {
   fill-opacity: 1;
@@ -51,11 +62,52 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
   opacity: 0;
 } */
 
+
+# %% [css]
+/* CSS for the legend */
+ #legend {
+    width: 42px;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: row;
+	height: 100%;
+    /*
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    */
+}
+
+#legend button {
+    height: 100%;
+    width: 42px;
+    background-color: #2e4369;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+}
+
+#legend .iframe {
+    display: none;
+}
+
+#legend iframe {
+    width: 100%;
+    padding-left: 0.5em;
+    height: 100%;
+    border: 0;
+    box-sizing: border-box;
+}
 # %%--- [html]
 # properties:
 #   run_on_load: true
 # ---%%
 <div id="map"></div>
+<div id="legend">
+  <button>❮</button>
+  <div class="iframe"><iframe src="https://cyclosm.org/legend.html"></iframe></div>
+</div>
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
@@ -79,11 +131,68 @@ var color_scheme = ['#0909D2','#FF7424','#DA0B2A','#111111']
 # properties:
 #   run_on_load: true
 # ---%%
+// Add map tiles (the actual map)
 var cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                 minZoom: 0,
                 maxZoom: 20,
             }).addTo(map);
+// Add a scale
+L.control.scale().addTo(map);
+# %%--- [javascript]
+# properties:
+#   run_on_load: true
+# ---%%
+// =============
+// Handle legend
+// =============
+function handleResize() {
+    var shouldLegendOpen = true;
+
+    if (screen.width > 800) {
+        shouldLegendOpen = true;
+    } else {
+        shouldLegendOpen = false;
+    }
+
+    if (shouldLegendOpen) {
+        //document.querySelector('#map').style.right = '300px';
+        document.querySelector('#map').style.width = '680px';
+        document.querySelector('#legend .iframe').style.display = 'initial';
+        document.querySelector('#legend').style.width = '300px';
+        //document.querySelector('#legend').style.marginLeft = '650px';
+        document.querySelector('#legend button').innerText = '❯';
+    } else {
+        //document.querySelector('#map').style.right = '42px';
+        document.querySelector('#map').style.width = '937px';
+        document.querySelector('#legend .iframe').style.display = 'none';
+        document.querySelector('#legend').style.width = '42px';
+        //document.querySelector('#legend').style.marginLeft = '908px';
+        document.querySelector('#legend button').innerText = '❮';
+    }
+}
+handleResize();
+window.addEventListener('resize', handleResize());
+document.querySelector('#legend button').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    if (document.querySelector('#legend button').innerText == '❮') {
+        //document.querySelector('#map').style.right = '300px';
+        document.querySelector('#map').style.width = '680px';
+        document.querySelector('#legend .iframe').style.display = 'initial';
+        document.querySelector('#legend').style.width = '300px';
+        //document.querySelector('#legend').style.marginLeft = '650px';
+        document.querySelector('#legend button').innerText = '❯';
+    } else {
+        //document.querySelector('#map').style.right = '42px';
+        document.querySelector('#map').style.width = '937px';
+        document.querySelector('#legend .iframe').style.display = 'none';
+        document.querySelector('#legend').style.width = '42px';
+        //document.querySelector('#legend').style.marginLeft = '908px';
+        document.querySelector('#legend button').innerText = '❮';
+    }
+    map.invalidateSize();
+});
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
