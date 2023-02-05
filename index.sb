@@ -2,7 +2,7 @@
 # properties:
 #   locked: true
 # ---%%
-# Final project
+## Fahrrad-Unfälle Berlins der letzten Jahre
 # %% [css]
 .cell-gutter, .cell-top {
     background-color: #fff;  /* Change this to #faf */
@@ -52,7 +52,7 @@ div.leaflet-marker-icon.q-marker-cluster:hover > div {
 } */
 
 # %% [markdown]
-## Fahrrad-Unfälle Berlins der letzten Jahre
+## Wie ist die Visualisierung zu lesen?
 
 Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 dargestellt sind. Die Unfälle sind aufgeschlüsselt nach der schwere der zugezogenen Verletzung(en) der Beteiligten; von blau (leicht), über orange (schwer) bis rot (tödlich).
 
@@ -60,7 +60,7 @@ Hier sehen Sie eine Karte auf der alle Fahrrad-Unfälle von 2018 bis 2021 darges
 Die zugrundeliegende Karte ist eine Fahrrad-Karte von OpenStreetMap (<https://www.cyclosm.org/>). Hier sind grundsätzliche alle relevanten Verkehrsinformationen enthalten, aber insbesondere sind verschiedene Arten von Fahrrad-Wegen dargestellt. Diese Informationen können sie der OpenStreetMap-Legende entnehmen.
 
 \
-Zu sehen sind Torten-Diagramme, welche Unfälle eines Gebiets zusammenfassen. Hierbei gilt: Je weiter rausgezoomt die Darstellung ist, desto mehr Unfälle werden zusammengefasst. In der Mitte des Diagramms ist zu sehen, wie viele Unfälle genau akkumuliert sind. Um die einzelnen Unfall-Orte zu sehen, können sie entweder nah genug ran zoomen oder mit der Mause über das Torten-Diagramm fahren.
+Zu sehen sind Torten-Diagramme, welche Unfälle eines Gebiets zusammenfassen. Hierbei gilt: Je weiter rausgezoomt die Darstellung ist, desto mehr Unfälle werden zusammengefasst. Der Mitte des Torten-Diagramms können Sie entnehmen, wie viele Unfälle genau akkumuliert sind. Um die einzelnen Unfall-Orte zu sehen, können sie entweder nah genug ran zoomen oder mit der Mause über das Torten-Diagramm fahren.
 
 \
 Des weiteren gibt es Filterfunktionen, die es erlauben, zu kontrollieren welche Daten dargestellt werden. Hierdurch können Sie auf Randbedingungen wie Straßenbeschaffenheit und Lichtverhältnisse der dargestellten Unfälle Einfluss nehmen. Sowie steuern welche Jahre und/oder Verletzungsschwere beachtet werden sollen.
