@@ -1,5 +1,6 @@
 # %%--- [html]
 # properties:
+#   run_on_load: true
 #   top_hidden: true
 # ---%%
 <p  align="center" class="cells-text" style="font-size:32px;"> Fahrrad-Unfälle Berlins von 2018 bis 2021 </p>
