@@ -765,7 +765,7 @@ var QCluster = (function(module){
 			participants.push('Sonstige');
 		}
 
-		return "<b>" + accidentTypes[p.UTYP1-1] + "</b><br>"
+		return "<h4>" + accidentTypes[p.UTYP1-1] + "</h4>"
 			+ date + "<br>"
 			+ "<b>Beteiligte:</b> " + participants.join(', ') + "<br>"
 			+ "<b>Kategorie:</b> " + accidentSevereness[p.UKATEGORIE - 1] + "<br>"
