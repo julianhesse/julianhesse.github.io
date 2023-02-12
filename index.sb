@@ -122,7 +122,7 @@ starboard-notebook {
 
 #rect_3 {
  
-  background-color: #03D8BC;
+  background-color: #14b369;
   
 }
 
@@ -299,7 +299,7 @@ var back_color = '#9A999F'
 //var color_scheme = ['#0F6B99','#FF7424','#DA0B2A','#111111']
 //var color_scheme = ['#00A3CC','#FF7424','#DA0B2A','#111111']
 //var color_scheme = ['#0F6680','#FF7424','#DA0B2A','#111111']
-var color_scheme = ['#03D8BC','#FF7424','#DA0B2A','#111111']
+var color_scheme = ['#14b369','#FF7424','#DA0B2A','#111111']
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
