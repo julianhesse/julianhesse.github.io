@@ -296,7 +296,10 @@ var map = L.map('map').setView([52.533, 13.426], 14);
 #   top_hidden: true
 # ---%%
 var back_color = '#9A999F'
-var color_scheme = ['#0909D2','#FF7424','#DA0B2A','#111111']
+//var color_scheme = ['#0F6B99','#FF7424','#DA0B2A','#111111']
+//var color_scheme = ['#00A3CC','#FF7424','#DA0B2A','#111111']
+//var color_scheme = ['#0F6680','#FF7424','#DA0B2A','#111111']
+var color_scheme = ['#0066FF','#FF7424','#DA0B2A','#111111']
 # %%--- [javascript]
 # properties:
 #   run_on_load: true
@@ -377,9 +380,10 @@ function preprocessData(data) {
   var result = [];
   for (var i = 0; i < data.length; i++) {
 	var point = data[i];
-    result.push({"UKATEGORIE" : point["UKATEGORIE"], "ULICHTVERH" : point["ULICHTVERH"], 
-                 "ULICHTVERH" : point["ULICHTVERH"],
-                 "UJAHR" : point["UJAHR"]});
+    //result.push({"UKATEGORIE" : point["UKATEGORIE"], "ULICHTVERH" : point["ULICHTVERH"], 
+    //             "ULICHTVERH" : point["ULICHTVERH"],
+    //             "UJAHR" : point["UJAHR"]});
+    result.push(point);
 
     
 	

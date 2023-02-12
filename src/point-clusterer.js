@@ -357,6 +357,7 @@ var QCluster = (function(module){
         this.donutIRFrac =  options.donutIRFrac || 0.4;
 		
         this.activeCluster = null;
+		this.selectedDonut = null;
         
         pointArrLength = pointArr.length;
 		
@@ -578,6 +579,7 @@ var QCluster = (function(module){
 			this.markActiveCluster();
 		}
         
+		// make Markers with Tooltips when close enough
 
 	};
 
@@ -692,11 +694,92 @@ var QCluster = (function(module){
 
 		}
 
-		this.map.setView(cluster._latlng, i);	
+		if (currentZoom <= 16) {
+			this.map.setView(cluster._latlng, i);	
+			console.log('Zoom in');
+		}
+		else{
+			// restore markers q-marker-cluster
+			// document.getElementsByClassName(this.clusterCssClass)[0].style.display = "none";
+			elements = document.getElementsByClassName('q-marker-cluster');
+			for (var i = 0; i < elements.length; i++) {
+				elements[i].style.display = "block";
+			}
+			console.log(e);
+			console.log(e.target._icon.classList[4]);
+			// console.log(this.selectedDonut);
+			// console.log(this.clickedDonut);
+			// if (this.selectedDonut != null) {
+			// 	document.getElementById(this.selectedDonut).style.display = "block";
+			// 	// this.clickedDonut.target._icon.style.display = "block";
+			// 	console.log('Reappear Donut');
+			// }
+			e.target._icon.style.display = "none";
+			// this.clickedDonut = Object.assign({}, e);;
+			this.clickedDonut = true;
+			this.selectedDonut = `${e.target._icon.classList[4]}`;
+			console.log('Remove Donut');
+			// console.log(this.clickedDonut);
+		}
         
     };
 
+	module.PointClusterer.prototype.createTooltip = function(p) {
+		const accidentTypes = ['Fahrunfall', 'Abbiegeunfall', 'Einbiegen / Kreuzen-Unfall', 'Überschreiten-Unfall', 'Unfall durch ruhenden Verkehr', 'Unfall im Längsverkehr', 'sonstigerUnfall'];
+
+		const accidentSevereness = ['Gestorbene', 'Schwerverletzte', 'Leichtverletzte'];
+
+		const date = "<b>Jahr/Montag/Zeit:</b> " + p.UJAHR.toString() + " / " + p.UMONAT.toString() + " / " + p.USTUNDE.toString() + " Uhr";
+
+		const accidentClass = [
+			'Unfall anderer Art',
+			'Zusammenstoß mit anfahrendem/<br>anhaltendem/ruhendem Fahrzeug',
+			'Zusammenstoß mit vorausfahrendem/<br>wartendem Fahrzeug',
+			'Zusammenstoß mit seitlich in <br> gleicher Richtung fahrendem Fahrzeug',
+			'Zusammenstoß mit entgegenkommendem Fahrzeug',
+			'Zusammenstoß mit einbiegendem/<br> kreuzendem Fahrzeug',
+			'Zusammenstoß zwischen Fahrzeug<br> und Fußgänger',
+			'Aufprall auf Fahrbahnhindernis',
+			'Abkommen von Fahrbahn nach rechts',
+			'Abkommen von Fahrbahn nach links'
+		]
+
+		const participants = [];
+		
+		if (p.IstRad == 1) {
+			participants.push("Rad");
+		}
+		if (p.IstPKW == 1) {
+			participants.push('PKW');
+		}
+		if (p.IstFuss == 1) {
+			participants.push('Fussgänger');
+		}
+		if (p.IstKrad == 1) {
+			participants.push('Kraftrad');
+		}
+		if (p.IstGkfz == 1) {
+			participants.push('Güterkraftfahrzeug');
+		}
+		if (p.IstSonstige == 1) {
+			participants.push('Sonstige');
+		}
+
+		return "<b>" + accidentTypes[p.UTYP1-1] + "</b><br>"
+			+ date + "<br>"
+			+ "<b>Beteiligte:</b> " + participants.join(', ') + "<br>"
+			+ "<b>Kategorie:</b> " + accidentSevereness[p.UKATEGORIE - 1] + "<br>"
+			+ "<b>Unfallart:</b> " + accidentClass[p.UART];
+	}
+
     module.PointClusterer.prototype.defaultMouseoverHandler = function(e) {
+		// restore removed donuts
+		elements = document.getElementsByClassName('q-marker-cluster');
+		for (var i = 0; i < elements.length; i++) {
+			elements[i].style.display = "block";
+		}
+		// actual code
+    	this.removeIndicatorPoints();
 		console.log('Mouseover: point-clusterer.js')
 		console.log(e.target.points[0])
     	if (this.mouseoverGroup) return;
@@ -724,7 +807,6 @@ var QCluster = (function(module){
     	for(var i=len-1; i>=0; --i) {
     		var p = points[i];
 
-
     		if(this.reportingProperty && p[this.reportingProperty]) {
     			var prop = p[this.reportingProperty];
     			var color = this.reportingDictionary[prop].color;
@@ -738,7 +820,8 @@ var QCluster = (function(module){
     			color: color,
     			fillOpacity: fillOpacity,
     			opacity: opacity
-    		});
+    		})
+			.bindTooltip(this.createTooltip(p));
     		this.mouseoverGroup.addLayer(circle);
     	}
     	this.mouseoverGroup.addTo(this.map);
@@ -749,10 +832,12 @@ var QCluster = (function(module){
 		if (this.map && this.map.removeLayer && this.mouseoverGroup)
 			this.map.removeLayer(this.mouseoverGroup);
 		delete this.mouseoverGroup;
+		delete this.clickedDonut;
+		this.selectedDonut = null;
 	};
 
     module.PointClusterer.prototype.defaultMouseoutHandler = function(e) {
-    	this.removeIndicatorPoints();
+    	//this.removeIndicatorPoints();
     };
 
 	return module;
