@@ -729,7 +729,7 @@ var QCluster = (function(module){
 
 		const accidentSevereness = ['Gestorbene', 'Schwerverletzte', 'Leichtverletzte'];
 
-		const date = "<b>Jahr/Montag/Zeit:</b> " + p.UJAHR.toString() + " / " + p.UMONAT.toString() + " / " + p.USTUNDE.toString() + " Uhr";
+		const date = "<b>Jahr/Monat/Zeit:</b> " + p.UJAHR.toString() + " / " + p.UMONAT.toString() + " / " + p.USTUNDE.toString() + " Uhr";
 
 		const accidentClass = [
 			'Unfall anderer Art',
